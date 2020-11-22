@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/purple_200</color>
+
+    <!--bottomsheet-->
+    <color name="bottomSheet_onCheked">#050505</color>
+</resources>

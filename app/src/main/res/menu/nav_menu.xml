@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_home"/>
     <item android:title="Saved"
         android:id="@+id/savedFragment"
-        android:icon="@drawable/ic_fav"/>
+        android:icon="@drawable/ic_fav"/>c
     <item android:title="Profile"
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person"/>
