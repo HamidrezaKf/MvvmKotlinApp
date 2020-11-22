@@ -30,7 +30,7 @@ class SplashFragment : Fragment() {
             override fun run() {
                 findNavController().navigate(R.id.action_splashFragment_to_introSliderFragment)
             }
-        },2000)
+        },2500)
     }
 
 }

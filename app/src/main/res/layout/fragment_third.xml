@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradiant_1"
+    app:layoutDescription="@xml/fragment_third_scene"
     tools:context=".ui.fragments.introslides.ThirdFragment">
-
 
 
     <ImageView
@@ -28,11 +28,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:fontFamily="@font/vazir_medium_fd"
         android:text="حالت مطالعه در شب"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="22sp"
-        android:fontFamily="@font/vazir_medium_fd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -42,12 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="40dp"
-        android:text="بزن بریم!"
-        android:textSize="22sp"
-        android:padding="15dp"
-        android:textColor="@color/colorPrimary"
         android:background="@drawable/edt_signin_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:padding="15dp"
+        android:text="بزن بریم!"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+</androidx.constraintlayout.motion.widget.MotionLayout>
