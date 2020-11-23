@@ -54,12 +54,13 @@
         android:inputType="textPassword"
         android:hint="رمز عبور"
         android:textAlignment="textEnd"
+        android:textCursorDrawable="@null"
         app:layout_constraintEnd_toEndOf="@+id/edt_email"
         app:layout_constraintStart_toStartOf="@+id/edt_email"
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_log_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="ورود"

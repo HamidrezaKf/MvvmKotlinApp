@@ -1,5 +1,6 @@
 package com.hamidreza.newsapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -8,9 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.hamidreza.newsapp.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +33,13 @@ class SplashFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        val isLogin = sharedPreferences.getBoolean("IS_LOG_IN",false)
         Handler().postDelayed(object : Runnable{
             override fun run() {
-                findNavController().navigate(R.id.action_splashFragment_to_introSliderFragment)
+                if (isLogin)
+                    findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+                else
+                    findNavController().navigate(R.id.action_splashFragment_to_introSliderFragment)
             }
         },2500)
     }
