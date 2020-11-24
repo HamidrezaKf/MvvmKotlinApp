@@ -10,4 +10,10 @@
         <item name="android:maxLines">1</item>
         <item name="android:inputType">textPersonName</item>
     </style>
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/vazir_medium_fd</item>
+    </style>
+
 </resources>

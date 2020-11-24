@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500">
+       <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/edt_search"
+               motion:framePosition="0"
+               android:alpha="0" />
+       </KeyFrameSet>
+        <OnClick motion:targetId="@+id/iv_search" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="@+id/iv_search"
+            motion:layout_constraintBottom_toBottomOf="@+id/iv_search"
+            android:layout_width="0dp"
+            android:id="@+id/edt_search"
+            motion:layout_constraintEnd_toStartOf="@+id/iv_search"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/iv_left"
+            motion:layout_constraintTop_toBottomOf="@+id/edt_search"
+            android:layout_marginTop="13dp"
+            motion:layout_constraintStart_toStartOf="@+id/edt_search" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/iv_right"
+            motion:layout_constraintEnd_toEndOf="@+id/iv_search"
+            motion:layout_constraintTop_toTopOf="@+id/iv_left" />
+        <Constraint
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            motion:layout_constraintEnd_toStartOf="@+id/iv_right"
+            android:id="@+id/recyclerView"
+            motion:layout_constraintStart_toEndOf="@+id/iv_left"
+            motion:layout_constraintBottom_toBottomOf="@+id/iv_right"
+            motion:layout_constraintTop_toTopOf="@+id/iv_right" />
+    </ConstraintSet>
+    <ConstraintSet
+        android:id="@+id/close"
+        motion:deriveConstraintsFrom="@+id/end" >
+        <Constraint
+            android:id="@+id/edt_search"
+            motion:layout_constraintEnd_toStartOf="@+id/iv_search"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/iv_search"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/iv_search"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/end"
+        motion:constraintSetEnd="@+id/close"
+        motion:duration="400">
+        <OnClick motion:targetId="@+id/iv_search" />
+    </Transition>
+</MotionScene>

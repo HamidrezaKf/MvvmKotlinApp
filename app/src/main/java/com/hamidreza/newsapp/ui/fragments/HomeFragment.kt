@@ -21,12 +21,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button.setOnClickListener {
-            AppCompatDelegate
-                .setDefaultNightMode(
-                    AppCompatDelegate
-                        .MODE_NIGHT_YES);
-        }
+
     }
 
 }
+
+
+
+
+/*
+button.setOnClickListener {
+    AppCompatDelegate
+        .setDefaultNightMode(
+            AppCompatDelegate
+                .MODE_NIGHT_YES);
+}*/
