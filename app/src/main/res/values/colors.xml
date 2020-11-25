@@ -13,4 +13,6 @@
 <!--bottomsheet-->
     <color name="bottomSheet_onCheked">#C592A3</color>
 
+    <color name="category_onselected_text">#000</color>
+
 </resources>

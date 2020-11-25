@@ -44,10 +44,10 @@
             motion:layout_constraintEnd_toEndOf="@+id/iv_search"
             motion:layout_constraintTop_toTopOf="@+id/iv_left" />
         <Constraint
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             motion:layout_constraintEnd_toStartOf="@+id/iv_right"
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_category"
             motion:layout_constraintStart_toEndOf="@+id/iv_left"
             motion:layout_constraintBottom_toBottomOf="@+id/iv_right"
             motion:layout_constraintTop_toTopOf="@+id/iv_right" />

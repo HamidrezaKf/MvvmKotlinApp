@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:padding="4dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_search" />
@@ -46,7 +46,7 @@
         android:layout_marginTop="13dp"
         android:padding="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_search"
+        app:layout_constraintTop_toBottomOf="@id/edt_search"
         app:srcCompat="@drawable/ic_barrow_left" />
 
     <ImageView
@@ -59,12 +59,20 @@
         app:srcCompat="@drawable/ic_arrow_right" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_category"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/iv_right"
         app:layout_constraintEnd_toStartOf="@+id/iv_right"
         app:layout_constraintStart_toEndOf="@+id/iv_left"
-        app:layout_constraintTop_toBottomOf="@+id/iv_search" />
+        app:layout_constraintTop_toTopOf="@+id/iv_right" />
+
+    <Button
+        android:id="@+id/buttontest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="505dp" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -4,4 +4,6 @@
 
     <!--bottomsheet-->
     <color name="bottomSheet_onCheked">#050505</color>
+
+    <color name="category_onselected_text">#fff</color>
 </resources>
