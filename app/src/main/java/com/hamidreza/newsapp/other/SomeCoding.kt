@@ -1,5 +1,9 @@
 package com.hamidreza.newsapp.other
 
-fun main() {
+import kotlinx.coroutines.*
+import kotlin.concurrent.thread
 
-}
+fun main() {
+    
+ }
+
