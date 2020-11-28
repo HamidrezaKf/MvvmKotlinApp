@@ -3,6 +3,8 @@ package com.hamidreza.newsapp.data.api
 import com.hamidreza.newsapp.conts.Conts.API_KEY
 import com.hamidreza.newsapp.data.model.remote.NewsResponse
 import kotlinx.coroutines.Deferred
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,8 +15,8 @@ interface ApiRequests {
         @Query("country") countryName:String,
         @Query("page") page:Int,
         @Query("apiKey") api:String = API_KEY
-    ) : Deferred<NewsResponse>
+    ) : Call<NewsResponse>
 
-
+    
 
 }

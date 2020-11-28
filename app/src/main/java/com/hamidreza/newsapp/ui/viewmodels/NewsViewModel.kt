@@ -9,6 +9,7 @@ import com.hamidreza.newsapp.data.model.remote.NewsResponse
 import com.hamidreza.newsapp.repositories.NewsRepository
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.launch
+import retrofit2.awaitResponse
 import java.lang.Exception
 
 class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :ViewModel() {
@@ -18,9 +19,15 @@ class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :Vie
     fun getBreakingNews() {
         viewModelScope.launch {
             try {
-                breakingNews.postValue(repo.getBreakingNews("us",1).await())
+                //breakingNews.postValue(repo.getBreakingNews("us",1).await())
+                val response = repo.getBreakingNews("us",1).awaitResponse()
+                if (response.isSuccessful){
+                    breakingNews.postValue(response.body())
+                }else{
+                    Log.e(TAG, "something wrong in else ${response.message()}", )
+                }
             }catch (e:Exception){
-                Log.e(TAG, "something wrong ${e.message.toString()}", )
+                Log.e(TAG, "something wrong in catch ${e.message.toString()}", )
             }
         }
     }

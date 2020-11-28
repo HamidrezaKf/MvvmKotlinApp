@@ -30,7 +30,7 @@ class RetrofitModule {
     @Singleton
     fun provideRetrofit(gson: Gson): Retrofit.Builder{
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(BASE_URL)
     }

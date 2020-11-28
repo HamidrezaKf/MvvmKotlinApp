@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class NewsRepository @Inject constructor(val api:ApiRequests) {
 
-     fun getBreakingNews(country:String,page:Int) = api.getBreakingNews(country,page)
+    fun getBreakingNews(country:String,page:Int) = api.getBreakingNews(country,page)
 
 }
