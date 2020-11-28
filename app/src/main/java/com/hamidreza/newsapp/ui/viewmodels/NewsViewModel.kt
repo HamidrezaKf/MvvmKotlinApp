@@ -19,12 +19,12 @@ class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :Vie
     private val TAG = "NewsViewModel"
     val breakingNews: MutableLiveData<ResultWrapper<NewsResponse>> = MutableLiveData()
 
-    fun getBreakingNews() {
+    fun getBreakingNews(country:String,page:Int,category:String) {
         viewModelScope.launch {
             try {
                 //breakingNews.postValue(repo.getBreakingNews("us",1).await())
                 breakingNews.postValue(ResultWrapper.Loading())
-                val response = repo.getBreakingNews("us", 1).await()
+                val response = repo.getBreakingNews(country, page,category).await()
                 breakingNews.postValue(handleResponse(response))
             } catch (e: NoInternetExceptions) {
                 breakingNews.postValue(ResultWrapper.Error(e.message.toString()))

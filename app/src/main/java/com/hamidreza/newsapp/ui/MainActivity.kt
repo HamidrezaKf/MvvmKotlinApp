@@ -3,6 +3,7 @@ package com.hamidreza.newsapp.ui
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,10 +16,11 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i(TAG, "onCreate: ")
         bottom_nav.setupWithNavController(nav_host.findNavController())
         nav_host.findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
@@ -31,5 +33,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

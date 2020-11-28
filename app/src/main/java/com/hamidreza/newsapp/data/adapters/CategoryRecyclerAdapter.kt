@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
+import com.hamidreza.newsapp.data.model.local.Category
 import kotlinx.android.synthetic.main.category_recycler_itmes.view.*
 
-class CategoryRecyclerAdapter(val list: List<String>) : RecyclerView.Adapter<CategoryRecyclerAdapter.MyViewHolder>()  {
+class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.MyViewHolder>()  {
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     var row_index =-1
 
@@ -22,10 +23,13 @@ class CategoryRecyclerAdapter(val list: List<String>) : RecyclerView.Adapter<Cat
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = list[position]
-        holder.itemView.tv_category.text = current
+        holder.itemView.tv_category.text = current.pName
         holder.itemView.setOnClickListener {
             row_index = position
             notifyDataSetChanged()
+            onItemClickListener?.let {
+                it(current.enName)
+            }
         }
         if(row_index==position){
             holder.itemView.background = holder.itemView.context.getDrawable(R.drawable.category_item_background)
@@ -53,9 +57,9 @@ class CategoryRecyclerAdapter(val list: List<String>) : RecyclerView.Adapter<Cat
         return list.size
     }
 
-    private var onItemClickListener: (() -> Unit)? = null
+    private var onItemClickListener: ((String) -> Unit)? = null
 
-    fun setOnItemClickListener(listener:() -> Unit){
+    fun setOnItemClickListener(listener:(String) -> Unit){
         onItemClickListener = listener
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.adapters.CategoryRecyclerAdapter
 import com.hamidreza.newsapp.data.adapters.NewsAdapter
+import com.hamidreza.newsapp.data.model.local.Category
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,9 @@ class HomeFragment : Fragment() {
 
     val viewModel: NewsViewModel by viewModels()
     lateinit var newsAdapter: NewsAdapter
+    lateinit var categoryAdapter: CategoryRecyclerAdapter
+    lateinit var categoryList:List<Category>
+    lateinit var linear:LinearLayoutManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,14 +36,16 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val list = listOf("sports", "action", "business", "weather", "dram", "action")
+        super.onViewCreated(view, savedInstanceState)/*
+        val list = listOf("عمومی", "سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت")
         val adapter = CategoryRecyclerAdapter(list)
         rv_category.adapter = adapter
         val linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rv_category.layoutManager = linear
+        rv_category.layoutManager = linear*/
+        linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        setUpCategoryRecycler()
         setUpNewsRecycler()
-        viewModel.getBreakingNews()
+        viewModel.getBreakingNews("us", 1, "general")
         viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
 
             when (response) {
@@ -52,23 +58,27 @@ class HomeFragment : Fragment() {
                 }
                 is ResultWrapper.Error -> {
                     hideProgressBar()
-                    when(response.msg){
-                        "connectivity" -> Toast.makeText(requireContext(), "اینترنت خود را چک کنید", Toast.LENGTH_SHORT).show()
+                    when (response.msg) {
+                        "connectivity" -> Toast.makeText(
+                            requireContext(),
+                            "اینترنت خود را چک کنید",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
 
         })
         iv_right.setOnClickListener {
-            if (linear.findLastCompletelyVisibleItemPosition() < (adapter.getItemCount() - 1)) {
+            if (linear.findLastCompletelyVisibleItemPosition() < (categoryAdapter.getItemCount() - 1)) {
                 linear.smoothScrollToPosition(
                     rv_category,
-                    RecyclerView.State(), adapter.itemCount
+                    RecyclerView.State(), categoryAdapter.itemCount
                 )
             }
         }
         iv_left.setOnClickListener {
-            if (linear.findLastCompletelyVisibleItemPosition() > (adapter.getItemCount() - 2)) {
+            if (linear.findLastCompletelyVisibleItemPosition() > (categoryAdapter.getItemCount() - 2)) {
                 linear.smoothScrollToPosition(
                     rv_category,
                     RecyclerView.State(), 0
@@ -77,12 +87,12 @@ class HomeFragment : Fragment() {
         }
 
     }
-    
-    fun showProgressBar(){
+
+    fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
     }
-    
-    fun hideProgressBar(){
+
+    fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
     }
 
@@ -96,7 +106,23 @@ class HomeFragment : Fragment() {
 
     fun setUpCategoryRecycler() {
         rv_category.apply {
-
+            //"سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت"
+            categoryList = listOf(Category("عمومی","general"),
+            Category("سرگرمی","entertainment"),
+            Category("تکنولوژی","technology"),
+            Category("ورزشی","sports"),
+            Category("علمی","science"),
+            Category("سلامت","health"),
+            Category("تجارت","business")
+            )
+            categoryAdapter = CategoryRecyclerAdapter(categoryList)
+            adapter = categoryAdapter
+            layoutManager = linear
+        }
+        categoryAdapter.setOnItemClickListener {
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            newsAdapter.differ.submitList(mutableListOf())
+            viewModel.getBreakingNews("us", 1, "$it")
         }
     }
 }

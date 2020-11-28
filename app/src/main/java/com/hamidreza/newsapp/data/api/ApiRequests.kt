@@ -14,6 +14,7 @@ interface ApiRequests {
      fun getBreakingNews(
         @Query("country") countryName:String,
         @Query("page") page:Int,
+        @Query("category") category:String,
         @Query("apiKey") api:String = API_KEY
     ) : Deferred<Response<NewsResponse>>
 
