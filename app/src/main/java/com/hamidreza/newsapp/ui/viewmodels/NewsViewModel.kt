@@ -20,7 +20,7 @@ class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :Vie
         viewModelScope.launch {
             try {
                 //breakingNews.postValue(repo.getBreakingNews("us",1).await())
-                val response = repo.getBreakingNews("us",1).awaitResponse()
+                val response = repo.getBreakingNews("us",1).await()
                 if (response.isSuccessful){
                     breakingNews.postValue(response.body())
                 }else{

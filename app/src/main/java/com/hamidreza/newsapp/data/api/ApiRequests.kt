@@ -15,7 +15,7 @@ interface ApiRequests {
         @Query("country") countryName:String,
         @Query("page") page:Int,
         @Query("apiKey") api:String = API_KEY
-    ) : Call<NewsResponse>
+    ) : Deferred<Response<NewsResponse>>
 
     
 
