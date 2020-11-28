@@ -1,14 +1,18 @@
 package com.hamidreza.newsapp.di
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hamidreza.newsapp.conts.Conts.BASE_URL
 import com.hamidreza.newsapp.data.api.ApiRequests
+import com.hamidreza.newsapp.utils.Connectivity
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -24,12 +28,23 @@ class RetrofitModule {
         return GsonBuilder().create()
     }
 
-
+    @Provides
+    @Singleton
+    fun provideConnectivity(@ApplicationContext context: Context):Connectivity{
+        return Connectivity(context)
+    }
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson): Retrofit.Builder{
+    fun provideHttpClient(connectivity: Connectivity):OkHttpClient{
+        return OkHttpClient.Builder().addInterceptor(connectivity).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson,okHttpClient: OkHttpClient): Retrofit.Builder{
         return Retrofit.Builder()
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(BASE_URL)
