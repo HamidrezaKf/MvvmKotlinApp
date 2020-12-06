@@ -1,12 +1,17 @@
 package com.hamidreza.newsapp.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +19,7 @@ import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.adapters.CategoryRecyclerAdapter
 import com.hamidreza.newsapp.data.adapters.NewsAdapter
 import com.hamidreza.newsapp.data.model.local.Category
+import com.hamidreza.newsapp.data.model.remote.NewsResponse
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    private val TAG = "HomeFragment"
     val viewModel: NewsViewModel by viewModels()
     lateinit var newsAdapter: NewsAdapter
     lateinit var categoryAdapter: CategoryRecyclerAdapter
@@ -45,9 +52,11 @@ class HomeFragment : Fragment() {
         linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         setUpCategoryRecycler()
         setUpNewsRecycler()
-        viewModel.getBreakingNews("us", 1, "general")
+        if (viewModel.breakingNews.value == null){
+            viewModel.getBreakingNews("us", 1, "general")
+        }
         viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
-
+            Log.i(TAG, "onViewCreated: observe")
             when (response) {
                 is ResultWrapper.Loading -> showProgressBar()
                 is ResultWrapper.Success -> {
@@ -123,6 +132,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             newsAdapter.differ.submitList(mutableListOf())
             viewModel.getBreakingNews("us", 1, "$it")
+
         }
     }
 }

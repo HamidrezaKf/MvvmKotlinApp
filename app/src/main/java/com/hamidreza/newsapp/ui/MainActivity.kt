@@ -17,20 +17,50 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
+    private var isHome = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.i(TAG, "onCreate: ")
+        Log.i(TAG, "onBackPressed main: ${nav_host.findNavController().currentDestination!!.id} and home id ${R.id.homeFragment} ")
+
         bottom_nav.setupWithNavController(nav_host.findNavController())
-        nav_host.findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
-            when(destination.id){
-                R.id.splashFragment -> bottom_nav.visibility = View.INVISIBLE
-                R.id.introSliderFragment -> bottom_nav.visibility = View.INVISIBLE
-                R.id.signInFragment -> bottom_nav.visibility = View.INVISIBLE
-                R.id.homeFragment -> bottom_nav.visibility = View.VISIBLE
-                R.id.savedFragment -> bottom_nav.visibility = View.VISIBLE
-                R.id.profileFragment -> bottom_nav.visibility = View.VISIBLE
+        nav_host.findNavController()
+            .addOnDestinationChangedListener { controller, destination, arguments ->
+                when (destination.id) {
+                    R.id.splashFragment -> {
+                        isHome = false
+                        bottom_nav.visibility = View.INVISIBLE
+                    }
+                    R.id.introSliderFragment -> {
+                        isHome = false
+                        bottom_nav.visibility = View.INVISIBLE
+                    }
+                    R.id.signInFragment -> {
+                        isHome = false
+                        bottom_nav.visibility = View.INVISIBLE
+                    }
+                    R.id.homeFragment -> {
+                        isHome = true
+                        bottom_nav.visibility = View.VISIBLE
+                    }
+                    R.id.savedFragment -> {
+                        isHome = false
+                        bottom_nav.visibility = View.VISIBLE
+                    }
+                    R.id.profileFragment -> {
+                        isHome = false
+                        bottom_nav.visibility = View.VISIBLE
+                    }
+                }
             }
+    }
+
+    override fun onBackPressed() {
+        if (isHome) {
+            finish()
+        } else {
+            super.onBackPressed()
         }
     }
 }
