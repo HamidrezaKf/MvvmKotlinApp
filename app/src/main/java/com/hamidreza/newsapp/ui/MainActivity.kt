@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.i(TAG, "onCreate: ")
-        Log.i(TAG, "onBackPressed main: ${nav_host.findNavController().currentDestination!!.id} and home id ${R.id.homeFragment} ")
-
         bottom_nav.setupWithNavController(nav_host.findNavController())
         nav_host.findNavController()
             .addOnDestinationChangedListener { controller, destination, arguments ->

@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.model.local.Category
 import kotlinx.android.synthetic.main.category_recycler_itmes.view.*
 
 class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.MyViewHolder>()  {
+
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    var row_index =-1
+    var row_index = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.category_recycler_itmes,parent,false)
@@ -28,9 +30,10 @@ class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<C
             row_index = position
             notifyDataSetChanged()
             onItemClickListener?.let {
-                it(current.enName)
+                it(current.enName,position)
             }
         }
+
         if(row_index==position){
             holder.itemView.background = holder.itemView.context.getDrawable(R.drawable.category_item_background)
             holder.itemView.tv_category.setTextColor(holder.itemView.context.getColor(R.color.white))
@@ -57,9 +60,9 @@ class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<C
         return list.size
     }
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((String,Int) -> Unit)? = null
 
-    fun setOnItemClickListener(listener:(String) -> Unit){
+    fun setOnItemClickListener(listener:(String,Int) -> Unit){
         onItemClickListener = listener
     }
 }

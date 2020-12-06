@@ -20,6 +20,9 @@ import java.lang.Exception
 
 class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :ViewModel() {
     private val TAG = "NewsViewModel"
+
+    var row_index_view_model :MutableLiveData<Int> = MutableLiveData(-1)
+
     private val _breakingNews: MutableLiveData<ResultWrapper<NewsResponse>> = MutableLiveData()
     val breakingNews:LiveData<ResultWrapper<NewsResponse>> = _breakingNews
 

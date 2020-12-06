@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -125,14 +126,17 @@ class HomeFragment : Fragment() {
             Category("تجارت","business")
             )
             categoryAdapter = CategoryRecyclerAdapter(categoryList)
+            viewModel.row_index_view_model.observe(viewLifecycleOwner, Observer {
+                categoryAdapter.row_index = it
+            })
             adapter = categoryAdapter
             layoutManager = linear
         }
-        categoryAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+        categoryAdapter.setOnItemClickListener { title,position ->
+            Toast.makeText(requireContext(), "$title", Toast.LENGTH_SHORT).show()
             newsAdapter.differ.submitList(mutableListOf())
-            viewModel.getBreakingNews("us", 1, "$it")
-
+            viewModel.getBreakingNews("us", 1, "$title")
+            viewModel.row_index_view_model.value = position
         }
     }
 }
