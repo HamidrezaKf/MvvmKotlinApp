@@ -14,6 +14,7 @@ import com.hamidreza.newsapp.ui.adapters.CategoryRecyclerAdapter
 import com.hamidreza.newsapp.ui.adapters.NewsAdapter
 import com.hamidreza.newsapp.data.model.local.Category
 import com.hamidreza.newsapp.databinding.FragmentHomeBinding
+import com.hamidreza.newsapp.ui.adapters.NewsLoadStateAdapter
 import com.hamidreza.newsapp.ui.adapters.NewsPagingAdapter
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
@@ -105,7 +106,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.rvNews.apply {
             //newsAdapter = NewsAdapter()
             newsPagingAdapter = NewsPagingAdapter()
-            adapter = newsPagingAdapter
+            adapter = newsPagingAdapter.withLoadStateFooter(footer = NewsLoadStateAdapter{
+                newsPagingAdapter.retry()
+            })
             layoutManager = LinearLayoutManager(requireContext())
         }
     }

@@ -11,13 +11,18 @@ import retrofit2.http.Query
 interface ApiRequests {
 
     @GET("v2/top-headlines")
-     fun getBreakingNews(
-        @Query("country") countryName:String,
-        @Query("page") page:Int,
-        @Query("category") category:String,
-        @Query("apiKey") api:String = API_KEY
-    ) : Deferred<Response<NewsResponse>>
+    fun getBreakingNews(
+        @Query("country") countryName: String,
+        @Query("page") page: Int,
+        @Query("category") category: String,
+        @Query("apiKey") api: String = API_KEY
+    ): Deferred<Response<NewsResponse>>
 
-    
+    @GET("v2/everything")
+    fun searchForNews(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("apiKey") api: String = API_KEY
+    ): Deferred<Response<NewsResponse>>
 
 }

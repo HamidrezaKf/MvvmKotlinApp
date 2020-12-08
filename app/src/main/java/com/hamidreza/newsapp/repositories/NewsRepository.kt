@@ -14,7 +14,7 @@ class NewsRepository @Inject constructor(val api:ApiRequests) {
 
     fun getBreakingNews(country:String,category:String) = Pager(config =
         PagingConfig(
-            pageSize = 20,
+            pageSize = 5,
             maxSize = 100
         ),
             pagingSourceFactory = {

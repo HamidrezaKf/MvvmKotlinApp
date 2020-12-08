@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.databinding.NewsItemBinding
@@ -30,7 +31,7 @@ companion object{
         fun bind(item:Article){
             binding.apply {
 
-                Glide.with(itemView).load(item.urlToImage)
+                Glide.with(itemView).load(item.urlToImage).transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.image_error).into(ivArticleImage)
 
                 tvTitle.text = item.title
