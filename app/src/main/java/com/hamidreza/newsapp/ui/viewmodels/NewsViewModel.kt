@@ -2,10 +2,8 @@ package com.hamidreza.newsapp.ui.viewmodels
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.hamidreza.newsapp.data.model.remote.NewsResponse
 import com.hamidreza.newsapp.repositories.NewsRepository
 import com.hamidreza.newsapp.utils.NoInternetExceptions
@@ -21,12 +19,36 @@ import java.lang.Exception
 class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :ViewModel() {
     private val TAG = "NewsViewModel"
 
+    companion object{
+      private  const val DEFAULT_CATEGORY="general"
+    }
+
     var row_index_view_model :MutableLiveData<Int> = MutableLiveData(-1)
 
+    val currentCategory:MutableLiveData<String> = MutableLiveData(DEFAULT_CATEGORY)
+    val news = currentCategory.switchMap {
+        repo.getBreakingNews("us",it).cachedIn(viewModelScope)
+    }
+
+    fun setCategory(category:String){
+        currentCategory.value = category
+    }
+
+
+
+}
+
+
+
+
+/*
     private val _breakingNews: MutableLiveData<ResultWrapper<NewsResponse>> = MutableLiveData()
-    val breakingNews:LiveData<ResultWrapper<NewsResponse>> = _breakingNews
+    val breakingNews:LiveData<ResultWrapper<NewsResponse>> = _breakingNews*/
 
 
+
+
+/*
     fun getBreakingNews(country:String,page:Int,category:String) {
         Log.i(TAG, "ViewModelNews: ")
         viewModelScope.launch {
@@ -50,5 +72,4 @@ class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :Vie
             }
         }
         return ResultWrapper.Error(response.message())
-    }
-}
+    }*/

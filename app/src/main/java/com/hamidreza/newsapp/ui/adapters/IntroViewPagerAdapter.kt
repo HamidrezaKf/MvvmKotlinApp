@@ -1,4 +1,4 @@
-package com.hamidreza.newsapp.data.adapters
+package com.hamidreza.newsapp.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

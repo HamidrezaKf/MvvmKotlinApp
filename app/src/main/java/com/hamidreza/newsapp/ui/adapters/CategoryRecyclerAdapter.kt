@@ -1,12 +1,10 @@
-package com.hamidreza.newsapp.data.adapters
+package com.hamidreza.newsapp.ui.adapters
 
-import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.model.local.Category

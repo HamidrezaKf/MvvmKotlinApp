@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.data.adapters.IntroViewPagerAdapter
+import com.hamidreza.newsapp.ui.adapters.IntroViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_intro_slider.*
 
 class IntroSliderFragment : Fragment() {
