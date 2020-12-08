@@ -21,27 +21,23 @@ import com.hamidreza.newsapp.data.adapters.CategoryRecyclerAdapter
 import com.hamidreza.newsapp.data.adapters.NewsAdapter
 import com.hamidreza.newsapp.data.model.local.Category
 import com.hamidreza.newsapp.data.model.remote.NewsResponse
+import com.hamidreza.newsapp.databinding.FragmentHomeBinding
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
+
+    private var _binding : FragmentHomeBinding ? = null
+    val binding get() = _binding!!
     private val TAG = "HomeFragment"
     val viewModel: NewsViewModel by viewModels()
     lateinit var newsAdapter: NewsAdapter
     lateinit var categoryAdapter: CategoryRecyclerAdapter
     lateinit var categoryList:List<Category>
     lateinit var linear:LinearLayoutManager
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)/*
@@ -50,6 +46,7 @@ class HomeFragment : Fragment() {
         rv_category.adapter = adapter
         val linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rv_category.layoutManager = linear*/
+        _binding = FragmentHomeBinding.bind(view)
         linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         setUpCategoryRecycler()
         setUpNewsRecycler()
@@ -79,18 +76,18 @@ class HomeFragment : Fragment() {
             }
 
         })
-        iv_right.setOnClickListener {
+        binding.ivRight.setOnClickListener {
             if (linear.findLastCompletelyVisibleItemPosition() < (categoryAdapter.getItemCount() - 1)) {
                 linear.smoothScrollToPosition(
-                    rv_category,
+                    binding.rvCategory,
                     RecyclerView.State(), categoryAdapter.itemCount
                 )
             }
         }
-        iv_left.setOnClickListener {
+        binding.ivLeft.setOnClickListener {
             if (linear.findLastCompletelyVisibleItemPosition() > (categoryAdapter.getItemCount() - 2)) {
                 linear.smoothScrollToPosition(
-                    rv_category,
+                    binding.rvCategory,
                     RecyclerView.State(), 0
                 )
             }
@@ -99,15 +96,15 @@ class HomeFragment : Fragment() {
     }
 
     fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     fun hideProgressBar() {
-        progressBar.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.INVISIBLE
     }
 
     fun setUpNewsRecycler() {
-        rv_news.apply {
+        binding.rvNews.apply {
             newsAdapter = NewsAdapter()
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -115,7 +112,7 @@ class HomeFragment : Fragment() {
     }
 
     fun setUpCategoryRecycler() {
-        rv_category.apply {
+        binding.rvCategory.apply {
             //"سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت"
             categoryList = listOf(Category("عمومی","general"),
             Category("سرگرمی","entertainment"),
@@ -138,6 +135,11 @@ class HomeFragment : Fragment() {
             viewModel.getBreakingNews("us", 1, "$title")
             viewModel.row_index_view_model.value = position
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 
