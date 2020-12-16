@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,20 +20,23 @@ import com.hamidreza.newsapp.ui.adapters.NewsPagingAdapter
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
-    private var _binding : FragmentHomeBinding ? = null
+    private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
     private val TAG = "HomeFragment"
     val viewModel: NewsViewModel by viewModels()
     lateinit var newsAdapter: NewsAdapter
     lateinit var newsPagingAdapter: NewsPagingAdapter
     lateinit var categoryAdapter: CategoryRecyclerAdapter
-    lateinit var categoryList:List<Category>
-    lateinit var linear:LinearLayoutManager
+    lateinit var categoryList: List<Category>
+    lateinit var linear: LinearLayoutManager
+    private var rowPosition = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)/*
@@ -72,8 +76,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
 
         })*/
-        viewModel.news.observe(viewLifecycleOwner){
-            newsPagingAdapter.submitData(viewLifecycleOwner.lifecycle,it)
+
+
+
+        viewModel.news.observe(viewLifecycleOwner) {
+            newsPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        viewModel.searchNews.observe(viewLifecycleOwner) {
+            if (binding.edtSearch.text.length !=0){
+                newsPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
+        }
+
+        
+        binding.edtSearch.addTextChangedListener {
+            it?.let {
+                if (it.toString().trim().isNotEmpty()) {
+                    viewModel.setSearch(it.toString())
+                /*
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(6000)
+                        binding.edtSearch.setText("")
+                    }*/
+                }
+            }
         }
         binding.ivRight.setOnClickListener {
             if (linear.findLastCompletelyVisibleItemPosition() < (categoryAdapter.getItemCount() - 1)) {
@@ -106,7 +133,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.rvNews.apply {
             //newsAdapter = NewsAdapter()
             newsPagingAdapter = NewsPagingAdapter()
-            adapter = newsPagingAdapter.withLoadStateFooter(footer = NewsLoadStateAdapter{
+            adapter = newsPagingAdapter.withLoadStateFooter(footer = NewsLoadStateAdapter {
                 newsPagingAdapter.retry()
             })
             layoutManager = LinearLayoutManager(requireContext())
@@ -116,28 +143,32 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     fun setUpCategoryRecycler() {
         binding.rvCategory.apply {
             //"سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت"
-            categoryList = listOf(Category("عمومی","general"),
-            Category("سرگرمی","entertainment"),
-            Category("تکنولوژی","technology"),
-            Category("ورزشی","sports"),
-            Category("علمی","science"),
-            Category("سلامت","health"),
-            Category("تجارت","business")
+            categoryList = listOf(
+                Category("عمومی", "general"),
+                Category("سرگرمی", "entertainment"),
+                Category("تکنولوژی", "technology"),
+                Category("ورزشی", "sports"),
+                Category("علمی", "science"),
+                Category("سلامت", "health"),
+                Category("تجارت", "business")
             )
-            categoryAdapter = CategoryRecyclerAdapter(categoryList)
+            categoryAdapter = CategoryRecyclerAdapter(categoryList)/*
             viewModel.row_index_view_model.observe(viewLifecycleOwner, Observer {
                 categoryAdapter.row_index = it
-            })
+            })*/
+            categoryAdapter.row_index = rowPosition
             adapter = categoryAdapter
             layoutManager = linear
         }
-        categoryAdapter.setOnItemClickListener { title,position ->
+        categoryAdapter.setOnItemClickListener { title, position ->
             Toast.makeText(requireContext(), "$title", Toast.LENGTH_SHORT).show()
-           // newsAdapter.differ.submitList(mutableListOf())
-           // viewModel.getBreakingNews("us", 1, "$title")
+            // newsAdapter.differ.submitList(mutableListOf())
+            // viewModel.getBreakingNews("us", 1, "$title")
             binding.rvNews.scrollToPosition(0)
             viewModel.setCategory("$title")
-            viewModel.row_index_view_model.value = position
+            binding.edtSearch.setText("")
+           // viewModel.row_index_view_model.value = position
+            rowPosition = position
         }
     }
 

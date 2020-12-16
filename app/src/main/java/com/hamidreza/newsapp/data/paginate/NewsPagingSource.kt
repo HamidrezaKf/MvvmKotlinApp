@@ -6,22 +6,31 @@ import com.hamidreza.newsapp.conts.Conts.START_PAGE_INDEX
 import com.hamidreza.newsapp.data.api.ApiRequests
 import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.data.model.remote.NewsResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 
 
 class NewsPagingSource(
     private val api: ApiRequests,
-    private val countryName: String,
-    private val category: String,
+    private val countryName: String?=null,
+    private val category: String?=null,
+    private val query:String?=null,
+    private val isSearch:Boolean
 
 
     ) : PagingSource<Int, Article>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val position = params.key ?: START_PAGE_INDEX
+        val response : Deferred<Response<NewsResponse>>
         return try {
-            val response = api.getBreakingNews(countryName, position, category)
+            if (isSearch){
+                response = api.searchForNews(query!!,position)
+            }else{
+                response = api.getBreakingNews(countryName!!, position, category!!)
+            }
             val newsResponse = response.await()
             if (newsResponse.isSuccessful) {
                 val articles = newsResponse.body()?.articles!!

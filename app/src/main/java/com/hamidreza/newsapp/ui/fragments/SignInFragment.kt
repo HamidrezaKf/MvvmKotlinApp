@@ -44,7 +44,7 @@ class SignInFragment() : Fragment() {
             password.length < 6 -> Toast.makeText(requireContext(), "رمز عبور حداقل 6 کارکتر باشد", Toast.LENGTH_SHORT).show()
             !email.matches(emailPattern.toRegex()) -> Toast.makeText(requireContext(), "ایمیل وارد شده صحیح نمی باشد", Toast.LENGTH_SHORT).show()
         }
-        if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty() &&  password.length > 6 && email.matches(emailPattern.toRegex())){
+        if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty() &&  password.length >= 6 && email.matches(emailPattern.toRegex())){
             findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
             val sh = sharedPreferences.edit()
             sh.putBoolean("IS_LOG_IN",true).apply()

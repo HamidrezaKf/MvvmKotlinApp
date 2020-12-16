@@ -13,6 +13,7 @@ import com.hamidreza.newsapp.R
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.log
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {

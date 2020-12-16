@@ -25,7 +25,10 @@
             android:layout_width="match_parent"
             android:id="@+id/rv_news"
             motion:layout_constraintTop_toBottomOf="@+id/rv_category"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -60,6 +63,19 @@
             motion:layout_constraintStart_toEndOf="@+id/iv_left"
             motion:layout_constraintBottom_toBottomOf="@+id/iv_right"
             motion:layout_constraintTop_toTopOf="@+id/iv_right" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/rv_category"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_editor_absoluteX="199dp"
+            android:id="@+id/rv_news"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" />
     </ConstraintSet>
     <ConstraintSet
         android:id="@+id/close"

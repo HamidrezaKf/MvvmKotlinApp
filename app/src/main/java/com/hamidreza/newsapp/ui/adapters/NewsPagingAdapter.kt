@@ -36,7 +36,6 @@ companion object{
 
                 tvTitle.text = item.title
                 tvDescription.text = item.description
-                tvPublishedAt.text = item.publishedAt
                 tvSource.text = item.source.name
             }
         }
@@ -53,6 +52,7 @@ companion object{
             holder.bind(currentItem)
         }
     }
+
 
 
 }
