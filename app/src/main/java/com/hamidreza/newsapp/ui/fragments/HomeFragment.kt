@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
@@ -84,21 +86,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.searchNews.observe(viewLifecycleOwner) {
-            if (binding.edtSearch.text.length !=0){
+            if (binding.edtSearch.text.length != 0) {
                 newsPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
             }
         }
 
-        
+
         binding.edtSearch.addTextChangedListener {
             it?.let {
                 if (it.toString().trim().isNotEmpty()) {
                     viewModel.setSearch(it.toString())
-                /*
-                    CoroutineScope(Dispatchers.Main).launch {
-                        delay(6000)
-                        binding.edtSearch.setText("")
-                    }*/
+                    /*
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(6000)
+                            binding.edtSearch.setText("")
+                        }*/
                 }
             }
         }
@@ -121,13 +123,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
-    fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
 
-    fun hideProgressBar() {
-        binding.progressBar.visibility = View.INVISIBLE
-    }
 
     fun setUpNewsRecycler() {
         binding.rvNews.apply {
@@ -137,6 +133,32 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 newsPagingAdapter.retry()
             })
             layoutManager = LinearLayoutManager(requireContext())
+        }
+        newsPagingAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                rvNews.isVisible = loadState.source.refresh is LoadState.NotLoading
+                if (loadState.source.refresh is LoadState.Error) {
+                    Toast.makeText(
+                        requireContext(),
+                        "وضعیت اینترنت خود را چک کنید",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                if(loadState.source.refresh is LoadState.NotLoading
+                    && loadState.append.endOfPaginationReached
+                    && newsPagingAdapter.itemCount < 1){
+                    Toast.makeText(
+                        requireContext(),
+                        "نتیجه ای یافت نشد",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }/*
+                tvEmpty.isVisible = (loadState.source.refresh is LoadState.NotLoading
+                        && loadState.append.endOfPaginationReached
+                        && newsPagingAdapter.itemCount < 1)*/
+
+            }
         }
     }
 
@@ -167,7 +189,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.rvNews.scrollToPosition(0)
             viewModel.setCategory("$title")
             binding.edtSearch.setText("")
-           // viewModel.row_index_view_model.value = position
+            // viewModel.row_index_view_model.value = position
             rowPosition = position
         }
     }
