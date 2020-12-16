@@ -124,7 +124,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
 
-
     fun setUpNewsRecycler() {
         binding.rvNews.apply {
             //newsAdapter = NewsAdapter()
@@ -136,28 +135,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         newsPagingAdapter.addLoadStateListener { loadState ->
             binding.apply {
+                btnRetry.setOnClickListener {
+                    newsPagingAdapter.retry()
+                }
                 progressBar.isVisible = loadState.source.refresh is LoadState.Loading
                 rvNews.isVisible = loadState.source.refresh is LoadState.NotLoading
-                if (loadState.source.refresh is LoadState.Error) {
-                    Toast.makeText(
-                        requireContext(),
-                        "وضعیت اینترنت خود را چک کنید",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                if(loadState.source.refresh is LoadState.NotLoading
+                btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+                tvStatus.isVisible = loadState.source.refresh is LoadState.Error
+                if (loadState.source.refresh is LoadState.NotLoading
                     && loadState.append.endOfPaginationReached
-                    && newsPagingAdapter.itemCount < 1){
-                    Toast.makeText(
-                        requireContext(),
-                        "نتیجه ای یافت نشد",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }/*
-                tvEmpty.isVisible = (loadState.source.refresh is LoadState.NotLoading
-                        && loadState.append.endOfPaginationReached
-                        && newsPagingAdapter.itemCount < 1)*/
-
+                    && newsPagingAdapter.itemCount < 1
+                ) {
+                    rvNews.isVisible = false
+                    tvEmpty.isVisible = true
+                } else {
+                    tvEmpty.isVisible = true
+                }
             }
         }
     }
