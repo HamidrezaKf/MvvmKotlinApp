@@ -8,7 +8,6 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.other.A
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -49,6 +48,10 @@ class MainActivity : AppCompatActivity() {
                     R.id.profileFragment -> {
                         isHome = false
                         bottom_nav.visibility = View.VISIBLE
+                    }
+                    R.id.articleFragment -> {
+                        isHome =false
+                        bottom_nav.visibility = View.INVISIBLE
                     }
                 }
             }

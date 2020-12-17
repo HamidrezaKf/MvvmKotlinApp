@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.hamidreza.newsapp.ui.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/savedFragment"
         android:name="com.hamidreza.newsapp.ui.fragments.SavedFragment"
@@ -60,7 +64,11 @@
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.hamidreza.newsapp.ArticleFragment"
+        android:name="com.hamidreza.newsapp.ui.fragments.ArticleFragment"
         android:label="fragment_article"
-        tools:layout="@layout/fragment_article" />
+        tools:layout="@layout/fragment_article" >
+        <argument
+            android:name="article"
+            app:argType="com.hamidreza.newsapp.data.model.remote.Article" />
+    </fragment>
 </navigation>

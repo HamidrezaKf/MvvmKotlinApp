@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.ui.adapters.CategoryRecyclerAdapter
 import com.hamidreza.newsapp.ui.adapters.NewsAdapter
 import com.hamidreza.newsapp.data.model.local.Category
+import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.databinding.FragmentHomeBinding
 import com.hamidreza.newsapp.ui.adapters.NewsLoadStateAdapter
 import com.hamidreza.newsapp.ui.adapters.NewsPagingAdapter
@@ -26,7 +28,7 @@ import kotlinx.coroutines.*
 import okhttp3.Dispatcher
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), NewsPagingAdapter.onItemClickListener {
 
 
     private var _binding: FragmentHomeBinding? = null
@@ -127,7 +129,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     fun setUpNewsRecycler() {
         binding.rvNews.apply {
             //newsAdapter = NewsAdapter()
-            newsPagingAdapter = NewsPagingAdapter()
+            newsPagingAdapter = NewsPagingAdapter(this@HomeFragment)
             adapter = newsPagingAdapter.withLoadStateFooter(footer = NewsLoadStateAdapter {
                 newsPagingAdapter.retry()
             })
@@ -149,7 +151,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     rvNews.isVisible = false
                     tvEmpty.isVisible = true
                 } else {
-                    tvEmpty.isVisible = true
+                    tvEmpty.isVisible = false
                 }
             }
         }
@@ -190,6 +192,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(item: Article) {
+        val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(item)
+        findNavController().navigate(action)
     }
 }
 

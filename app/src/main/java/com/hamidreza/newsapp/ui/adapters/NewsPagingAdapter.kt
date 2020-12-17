@@ -2,6 +2,7 @@ package com.hamidreza.newsapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +12,14 @@ import com.hamidreza.newsapp.R
 import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.databinding.NewsItemBinding
 
-class NewsPagingAdapter : PagingDataAdapter<Article,NewsPagingAdapter.NewsArticleViewHolder>(diffCallback = newsComparator) {
 
+
+
+class NewsPagingAdapter(val listener: onItemClickListener) : PagingDataAdapter<Article,NewsPagingAdapter.NewsArticleViewHolder>(diffCallback = newsComparator) {
+
+interface onItemClickListener{
+    fun onClick(item: Article)
+}
 
 companion object{
      val newsComparator = object : DiffUtil.ItemCallback<Article>(){
@@ -27,7 +34,20 @@ companion object{
 }
 
 
-    inner class NewsArticleViewHolder(val binding:NewsItemBinding):RecyclerView.ViewHolder(binding.root){
+    inner class NewsArticleViewHolder(private val binding:NewsItemBinding):RecyclerView.ViewHolder(binding.root){
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    val item = getItem(position)
+                    if (item !=null){
+                        listener.onClick(item)
+                    }
+                }
+            }
+        }
+
         fun bind(item:Article){
             binding.apply {
 
