@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/savedFragment"
-        android:name="com.hamidreza.newsapp.ui.fragments.SavedFragment"
+        android:name="com.hamidreza.newsapp.ui.fragments.SavedNewsFragment"
         android:label="fragment_saved"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved_news" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.hamidreza.newsapp.ui.fragments.ProfileFragment"

@@ -17,9 +17,7 @@ import com.hamidreza.newsapp.databinding.NewsItemBinding
 
 class NewsPagingAdapter(val listener: onItemClickListener) : PagingDataAdapter<Article,NewsPagingAdapter.NewsArticleViewHolder>(diffCallback = newsComparator) {
 
-interface onItemClickListener{
-    fun onClick(item: Article)
-}
+
 
 companion object{
      val newsComparator = object : DiffUtil.ItemCallback<Article>(){
