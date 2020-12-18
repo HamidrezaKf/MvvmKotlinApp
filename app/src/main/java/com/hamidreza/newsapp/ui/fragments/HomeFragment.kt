@@ -14,13 +14,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.ui.adapters.CategoryRecyclerAdapter
-import com.hamidreza.newsapp.ui.adapters.NewsAdapter
 import com.hamidreza.newsapp.data.model.local.Category
 import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.databinding.FragmentHomeBinding
-import com.hamidreza.newsapp.ui.adapters.NewsLoadStateAdapter
-import com.hamidreza.newsapp.ui.adapters.NewsPagingAdapter
+import com.hamidreza.newsapp.ui.adapters.*
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +25,7 @@ import kotlinx.coroutines.*
 import okhttp3.Dispatcher
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), NewsPagingAdapter.onItemClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
 
 
     private var _binding: FragmentHomeBinding? = null

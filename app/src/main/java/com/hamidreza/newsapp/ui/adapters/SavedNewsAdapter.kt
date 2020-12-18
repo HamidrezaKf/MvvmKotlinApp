@@ -43,7 +43,7 @@ class SavedNewsAdapter(val listener: onItemClickListener) : RecyclerView.Adapter
 
         fun bind(article: Article){
             binding.apply {
-                Glide.with(itemView).load(article.url).transition(DrawableTransitionOptions.withCrossFade())
+                Glide.with(binding.root).load(article.urlToImage).transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.image_error).into(ivArticleImage)
                 tvTitle.text = article.title
                 tvDescription.text = article.description

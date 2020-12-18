@@ -28,9 +28,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), onItemClickLis
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSavedNewsBinding.bind(view)
         setUpRecyclerView()
-        viewModel.getArticles.observe(viewLifecycleOwner){
-            savedNewsAdapter.differ.submitList(it)
-        }
     }
 
     override fun onDestroyView() {
@@ -43,6 +40,9 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), onItemClickLis
         binding.rvSearchNews.apply {
             adapter = savedNewsAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+        viewModel.getArticles.observe(viewLifecycleOwner){
+            savedNewsAdapter.differ.submitList(it)
         }
     }
 
