@@ -8,7 +8,4 @@
         android:id="@+id/savedFragment"
         android:icon="@drawable/ic_fav"/>
 
-    <item android:title="پروفایل"
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_person"/>
 </menu>
