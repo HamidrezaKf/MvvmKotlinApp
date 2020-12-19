@@ -1,9 +1,11 @@
 package com.hamidreza.newsapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -21,13 +23,17 @@ import com.hamidreza.newsapp.ui.adapters.*
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import okhttp3.Dispatcher
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
 
-
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    private var isNightMode: Boolean = false
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
     private val TAG = "HomeFragment"
@@ -40,6 +46,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
     private var rowPosition = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        AppCompatDelegate
+            .setDefaultNightMode(
+                AppCompatDelegate
+                    .MODE_NIGHT_YES
+            )
         super.onViewCreated(view, savedInstanceState)/*
         val list = listOf("عمومی", "سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت")
         val adapter = CategoryRecyclerAdapter(list)
@@ -50,34 +61,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
         linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         setUpCategoryRecycler()
         setUpNewsRecycler()
-        /*
-        if (viewModel.breakingNews.value == null){
-            viewModel.getBreakingNews("us", 1, "general")
-        }
-        viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
-            Log.i(TAG, "onViewCreated: observe")
-            when (response) {
-                is ResultWrapper.Loading -> showProgressBar()
-                is ResultWrapper.Success -> {
-                    hideProgressBar()
-                    response.data?.let {
-                        newsAdapter.differ.submitList(it.articles)
-                    };
-                }
-                is ResultWrapper.Error -> {
-                    hideProgressBar()
-                    when (response.msg) {
-                        "connectivity" -> Toast.makeText(
-                            requireContext(),
-                            "اینترنت خود را چک کنید",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
 
-        })*/
-
+        nightMode()
 
 
         viewModel.news.observe(viewLifecycleOwner) {
@@ -120,6 +105,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
             }
         }
 
+    }
+
+
+    fun nightMode() {
+        binding.apply {
+            floatingActionButtonNight.setOnClickListener {
+                AppCompatDelegate
+                    .setDefaultNightMode(
+                        AppCompatDelegate
+                            .MODE_NIGHT_NO
+                    )
+            }
+        }
     }
 
 
@@ -195,6 +193,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
         val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(item)
         findNavController().navigate(action)
     }
+
+
 }
 
 
