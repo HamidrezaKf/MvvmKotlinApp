@@ -2,8 +2,12 @@
 <resources>
     <color name="colorPrimary">@color/purple_200</color>
 
+    <color name="dark_light">#fff</color>
+
     <!--bottomsheet-->
     <color name="bottomSheet_onCheked">#050505</color>
 
     <color name="category_onselected_text">#fff</color>
+
+    <color name="dark_light_category_background">#000</color>
 </resources>

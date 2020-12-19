@@ -40,13 +40,15 @@ class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<C
             holder.itemView.tv_category.setTextColor(holder.itemView.context.getColor(R.color.white))
         }
         else if (position == 0 && row_index != -1){
-            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.white))
+            holder.itemView.background = holder.itemView.context.getDrawable(R.drawable.category_item_unselected)
+            //holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.dark_light_category_background))
             holder.itemView.tv_category.setTextColor(holder.itemView.context.getColor(R.color.category_onselected_text))
 
         }
         else
         {
-            holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.white))
+            holder.itemView.background = holder.itemView.context.getDrawable(R.drawable.category_item_unselected)
+            //holder.itemView.setBackgroundColor(holder.itemView.context.getColor(R.color.dark_light_category_background))
            // holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
             holder.itemView.tv_category.setTextColor(holder.itemView.context.getColor(R.color.category_onselected_text))
 

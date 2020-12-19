@@ -15,4 +15,7 @@
 
     <color name="category_onselected_text">#000</color>
 
+    <color name="dark_light">#000</color>
+    <color name="dark_light_category_background">#fff</color>
+
 </resources>
