@@ -1,6 +1,7 @@
 package com.hamidreza.newsapp.ui.fragments
 
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -33,7 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
-    private var isNightMode: Boolean = false
+    //private var isNightMode: Boolean = false
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
     private val TAG = "HomeFragment"
@@ -46,17 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
     private var rowPosition = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        AppCompatDelegate
-            .setDefaultNightMode(
-                AppCompatDelegate
-                    .MODE_NIGHT_YES
-            )
-        super.onViewCreated(view, savedInstanceState)/*
-        val list = listOf("عمومی", "سلامت", "علمی", "ورزشی", "تکنولوژی", "سرگرمی", "تجارت")
-        val adapter = CategoryRecyclerAdapter(list)
-        rv_category.adapter = adapter
-        val linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rv_category.layoutManager = linear*/
+        super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
         linear = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         setUpCategoryRecycler()
@@ -75,6 +66,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
             }
         }
 
+        viewModel.isNight.observe(viewLifecycleOwner){
+            when(it){
+                true -> {
+                    AppCompatDelegate
+                        .setDefaultNightMode(
+                            AppCompatDelegate
+                                .MODE_NIGHT_YES)
+                }
+                false -> {
+
+                    AppCompatDelegate
+                        .setDefaultNightMode(
+                            AppCompatDelegate
+                                .MODE_NIGHT_NO)
+                }
+            }
+        }
 
         binding.edtSearch.addTextChangedListener {
             it?.let {
@@ -111,11 +119,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
     fun nightMode() {
         binding.apply {
             floatingActionButtonNight.setOnClickListener {
-                AppCompatDelegate
-                    .setDefaultNightMode(
-                        AppCompatDelegate
-                            .MODE_NIGHT_NO
-                    )
+                if (!viewModel.isNight.value!!){
+                    viewModel.setNightMode(true)
+                }else{
+                    viewModel.setNightMode(false)
+                }
+
             }
         }
     }
@@ -197,11 +206,3 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
 
 }
 
-
-/*
-buttontest.setOnClickListener {
-    AppCompatDelegate
-        .setDefaultNightMode(
-            AppCompatDelegate
-                .MODE_NIGHT_YES);
-}*/

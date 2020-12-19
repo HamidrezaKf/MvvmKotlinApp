@@ -1,6 +1,7 @@
 package com.hamidreza.newsapp.ui.viewmodels
 
 import android.util.Log
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
@@ -16,47 +17,54 @@ import retrofit2.awaitResponse
 import java.lang.Exception
 
 
-class NewsViewModel @ViewModelInject constructor(val repo : NewsRepository) :ViewModel() {
+class NewsViewModel @ViewModelInject constructor(
+    val repo: NewsRepository,
+    @Assisted state: SavedStateHandle
+) : ViewModel() {
+
+
     private val TAG = "NewsViewModel"
 
-    companion object{
-      private  const val DEFAULT_CATEGORY="general"
+    var isNight = state.getLiveData("isNight",false)
+
+    companion object {
+        private const val DEFAULT_CATEGORY = "general"
     }
 
-    var row_index_view_model :MutableLiveData<Int> = MutableLiveData(-1)
+    var row_index_view_model: MutableLiveData<Int> = MutableLiveData(-1)
 
-    private val currentSearch : MutableLiveData<String> = MutableLiveData()
+    private val currentSearch: MutableLiveData<String> = MutableLiveData()
 
-    private val currentCategory:MutableLiveData<String> = MutableLiveData(DEFAULT_CATEGORY)
+    private val currentCategory: MutableLiveData<String> = MutableLiveData(DEFAULT_CATEGORY)
+
 
     val news = currentCategory.switchMap {
-        repo.getBreakingNews("us",it).cachedIn(viewModelScope)
+        repo.getBreakingNews("us", it).cachedIn(viewModelScope)
     }
 
     val searchNews = currentSearch.switchMap {
         repo.searchForNews(it).cachedIn(viewModelScope)
     }
 
-    fun setCategory(category:String){
+    fun setNightMode(mode:Boolean){
+        isNight.value = mode
+    }
+
+    fun setCategory(category: String) {
         currentCategory.value = category
     }
 
-    fun setSearch(query:String){
+    fun setSearch(query: String) {
         currentSearch.value = query
     }
-
 
 
 }
 
 
-
-
 /*
     private val _breakingNews: MutableLiveData<ResultWrapper<NewsResponse>> = MutableLiveData()
     val breakingNews:LiveData<ResultWrapper<NewsResponse>> = _breakingNews*/
-
-
 
 
 /*
