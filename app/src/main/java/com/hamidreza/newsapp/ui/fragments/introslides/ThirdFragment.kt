@@ -7,21 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.hamidreza.newsapp.R
-import kotlinx.android.synthetic.main.fragment_third.*
+import com.hamidreza.newsapp.databinding.FragmentThirdBinding
 
-class ThirdFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false)
-    }
+class ThirdFragment : Fragment(R.layout.fragment_third) {
+
+    private var _binding : FragmentThirdBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_go.setOnClickListener {
+        _binding = FragmentThirdBinding.bind(view)
+        binding.tvGo.setOnClickListener {
             findNavController().navigate(R.id.action_introSliderFragment_to_signInFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

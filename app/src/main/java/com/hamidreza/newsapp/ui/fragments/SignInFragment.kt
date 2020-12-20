@@ -9,34 +9,30 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.hamidreza.newsapp.R
+import com.hamidreza.newsapp.databinding.FragmentSignInBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignInFragment() : Fragment() {
+class SignInFragment() : Fragment(R.layout.fragment_sign_in) {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
-    }
+    private var _binding : FragmentSignInBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_log_in.setOnClickListener {
+        _binding = FragmentSignInBinding.bind(view)
+        binding.btnLogIn.setOnClickListener {
             logIn()
         }
     }
 
     fun logIn(){
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-        val name = edt_name.text.toString().trim()
-        val email = edt_email.text.toString().trim()
-        val password = edt_password.text.toString().trim()
+        val name = binding.edtName.text.toString().trim()
+        val email = binding.edtEmail.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
         when{
             name.isEmpty() -> Toast.makeText(requireContext(), "نام خود را وارد کنید", Toast.LENGTH_SHORT).show()
             email.isEmpty() -> Toast.makeText(requireContext(), "ایمیل خود را وارد کنید", Toast.LENGTH_SHORT).show()
@@ -49,7 +45,10 @@ class SignInFragment() : Fragment() {
             val sh = sharedPreferences.edit()
             sh.putBoolean("IS_LOG_IN",true).apply()
         }
+    }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

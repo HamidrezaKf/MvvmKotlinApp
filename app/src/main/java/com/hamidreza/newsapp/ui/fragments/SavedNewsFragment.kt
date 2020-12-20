@@ -16,7 +16,6 @@ import com.hamidreza.newsapp.ui.adapters.SavedNewsAdapter
 import com.hamidreza.newsapp.ui.adapters.onItemClickListener
 import com.hamidreza.newsapp.ui.viewmodels.ArticleViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 @AndroidEntryPoint
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), onItemClickListener {

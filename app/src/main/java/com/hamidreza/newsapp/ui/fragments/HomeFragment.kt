@@ -27,7 +27,6 @@ import com.hamidreza.newsapp.ui.adapters.*
 import com.hamidreza.newsapp.ui.viewmodels.NewsViewModel
 import com.hamidreza.newsapp.utils.ResultWrapper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import okhttp3.Dispatcher
 import javax.inject.Inject
@@ -42,7 +41,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
     val binding get() = _binding!!
     private val TAG = "HomeFragment"
     val viewModel: NewsViewModel by viewModels()
-    lateinit var newsAdapter: NewsAdapter
     lateinit var newsPagingAdapter: NewsPagingAdapter
     lateinit var categoryAdapter: CategoryRecyclerAdapter
     lateinit var categoryList: List<Category>
@@ -56,8 +54,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
         setUpCategoryRecycler()
         setUpNewsRecycler()
 
-        nightMode()
-
 
         viewModel.news.observe(viewLifecycleOwner) {
             newsPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -70,33 +66,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
         }
 
 
-        viewModel.isNight.observe(viewLifecycleOwner){
-            when(it){
-                true -> {
-                    AppCompatDelegate
-                        .setDefaultNightMode(
-                            AppCompatDelegate
-                                .MODE_NIGHT_YES)
-                }
-                false -> {
-
-                    AppCompatDelegate
-                        .setDefaultNightMode(
-                            AppCompatDelegate
-                                .MODE_NIGHT_NO)
-                }
-            }
-        }
-
         binding.edtSearch.addTextChangedListener {
             it?.let {
                 if (it.toString().trim().isNotEmpty()) {
                     viewModel.setSearch(it.toString())
-                    /*
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(6000)
-                            binding.edtSearch.setText("")
-                        }*/
                 }
             }
         }
@@ -117,20 +90,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), onItemClickListener {
             }
         }
 
-    }
-
-
-    fun nightMode() {
-        binding.apply {
-            floatingActionButtonNight.setOnClickListener {
-                if (!viewModel.isNight.value!!){
-                    viewModel.setNightMode(true)
-                }else{
-                    viewModel.setNightMode(false)
-                }
-
-            }
-        }
     }
 
 
