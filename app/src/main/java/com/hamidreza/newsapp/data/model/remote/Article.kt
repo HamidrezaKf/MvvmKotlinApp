@@ -13,13 +13,13 @@ data class Article(
     @PrimaryKey(autoGenerate = true)
     val id:Int,
     @SerializedName("author")
-    val author: String,
+    val author: String?,
     @SerializedName("content")
-    val content: String,
+    val content: String?,
     @SerializedName("description")
     val description: String,
     @SerializedName("publishedAt")
-    val publishedAt: String,
+    val publishedAt: String?,
     @SerializedName("source")
     val source: Source,
     @SerializedName("title")
