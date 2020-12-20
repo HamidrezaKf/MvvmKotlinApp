@@ -18,7 +18,11 @@
         android:id="@+id/savedFragment"
         android:name="com.hamidreza.newsapp.ui.fragments.SavedNewsFragment"
         android:label="fragment_saved"
-        tools:layout="@layout/fragment_saved_news" />
+        tools:layout="@layout/fragment_saved_news" >
+        <action
+            android:id="@+id/action_savedFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.hamidreza.newsapp.ui.fragments.ProfileFragment"
