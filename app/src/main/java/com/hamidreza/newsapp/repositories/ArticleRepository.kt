@@ -9,4 +9,6 @@ class ArticleRepository @Inject constructor(val db:ArticleDao) {
     suspend fun insertArticle(article: Article) = db.insertArticle(article)
 
     fun getArticles() = db.getArticles()
+
+    suspend fun deleteArticle(article: Article) = db.deleteArticle(article)
 }
