@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.hamidreza.newsapp.data.api.ApiRequests
-import com.hamidreza.newsapp.data.model.remote.Article
 import com.hamidreza.newsapp.data.paginate.NewsPagingSource
 import javax.inject.Inject
 

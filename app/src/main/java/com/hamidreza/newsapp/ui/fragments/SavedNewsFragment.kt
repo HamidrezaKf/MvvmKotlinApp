@@ -2,9 +2,7 @@ package com.hamidreza.newsapp.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.data.model.remote.Article
+import com.hamidreza.newsapp.data.model.Article
 import com.hamidreza.newsapp.databinding.FragmentSavedNewsBinding
 import com.hamidreza.newsapp.ui.adapters.SavedNewsAdapter
 import com.hamidreza.newsapp.ui.adapters.onItemClickListener
@@ -36,7 +34,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), onItemClickLis
         searchInNews()
 
         swipeDeleteItem()
-
 
     }
 
@@ -83,8 +80,12 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), onItemClickLis
             layoutManager = LinearLayoutManager(requireContext())
         }
         viewModel.getArticles.observe(viewLifecycleOwner){
-            savedNewsAdapter.differ.submitList(it)
-            currentList = it
+            if (it.size < 1){
+                binding.tvEmpty.visibility = View.VISIBLE
+            }else {
+                savedNewsAdapter.differ.submitList(it)
+                currentList = it
+            }
         }
     }
 

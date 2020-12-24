@@ -1,7 +1,7 @@
 package com.hamidreza.newsapp.repositories
 
 import com.hamidreza.newsapp.data.db.ArticleDao
-import com.hamidreza.newsapp.data.model.remote.Article
+import com.hamidreza.newsapp.data.model.Article
 import javax.inject.Inject
 
 class ArticleRepository @Inject constructor(val db:ArticleDao) {

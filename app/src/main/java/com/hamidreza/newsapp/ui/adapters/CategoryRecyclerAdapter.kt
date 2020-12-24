@@ -2,12 +2,11 @@ package com.hamidreza.newsapp.ui.adapters
 
 import android.os.Build
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.data.model.local.Category
+import com.hamidreza.newsapp.data.model.Category
 import com.hamidreza.newsapp.databinding.CategoryRecyclerItmesBinding
 
 class CategoryRecyclerAdapter(val list: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.MyViewHolder>()  {

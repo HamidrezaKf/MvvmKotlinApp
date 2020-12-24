@@ -1,3 +1,3 @@
-package com.hamidreza.newsapp.data.model.local
+package com.hamidreza.newsapp.data.model
 
 data class Category(val pName:String,val enName:String)

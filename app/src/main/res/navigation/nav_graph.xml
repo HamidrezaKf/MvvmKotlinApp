@@ -73,6 +73,15 @@
         tools:layout="@layout/fragment_article" >
         <argument
             android:name="article"
-            app:argType="com.hamidreza.newsapp.data.model.remote.Article" />
+            app:argType="com.hamidreza.newsapp.data.model.Article" />
     </fragment>
+    <dialog
+        android:id="@+id/showAlertDialogFragment"
+        android:name="com.hamidreza.newsapp.ui.fragments.ShowAlertDialogFragment"
+        android:label="ShowAlertDialogFragment" />
+    <action
+        android:id="@+id/action_global_showAlertDialogFragment"
+        app:destination="@id/showAlertDialogFragment"
+        app:popUpTo="@id/articleFragment"
+        app:popUpToInclusive="true" />
 </navigation>

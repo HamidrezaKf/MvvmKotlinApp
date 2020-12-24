@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.hamidreza.newsapp.R
-import com.hamidreza.newsapp.data.model.remote.Article
-import com.hamidreza.newsapp.databinding.FragmentSavedNewsBinding
+import com.hamidreza.newsapp.data.model.Article
 import com.hamidreza.newsapp.databinding.NewsItemBinding
 
 class SavedNewsAdapter(val listener: onItemClickListener) : RecyclerView.Adapter<SavedNewsAdapter.SavedNewsViewHolder>() {

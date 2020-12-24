@@ -1,6 +1,6 @@
 package com.hamidreza.newsapp.ui.adapters
 
-import com.hamidreza.newsapp.data.model.remote.Article
+import com.hamidreza.newsapp.data.model.Article
 
 interface onItemClickListener {
 

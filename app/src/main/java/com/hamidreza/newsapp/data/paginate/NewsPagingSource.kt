@@ -1,11 +1,10 @@
 package com.hamidreza.newsapp.data.paginate
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.hamidreza.newsapp.conts.Conts.START_PAGE_INDEX
 import com.hamidreza.newsapp.data.api.ApiRequests
-import com.hamidreza.newsapp.data.model.remote.Article
-import com.hamidreza.newsapp.data.model.remote.NewsResponse
+import com.hamidreza.newsapp.data.model.Article
+import com.hamidreza.newsapp.data.model.NewsResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.HttpException
 import retrofit2.Response

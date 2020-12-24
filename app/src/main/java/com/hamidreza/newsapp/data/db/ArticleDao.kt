@@ -2,7 +2,7 @@ package com.hamidreza.newsapp.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.hamidreza.newsapp.data.model.remote.Article
+import com.hamidreza.newsapp.data.model.Article
 
 @Dao
 interface ArticleDao {

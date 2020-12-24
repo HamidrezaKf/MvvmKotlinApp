@@ -88,6 +88,10 @@ class MainActivity : AppCompatActivity() {
                             bottomNav.visibility = View.INVISIBLE
                             floatingActionButtonNight.visibility = View.INVISIBLE
                         }
+                        R.id.showAlertDialogFragment -> {
+                            isHome = false
+                            bottomNav.visibility = View.VISIBLE
+                        }
                     }
                 }
         }
